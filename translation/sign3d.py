@@ -82,6 +82,11 @@ def build(dir_=None):
             else: new = banner(idx, pal, t)
             put4(m, es[i], new)
         out[f + '.MTI'] = bytes(m)
+    f = 'data/azuma/panel/pakon/pakon'; base = os.path.join(R, 'work', 'xb', f)   # パコーン! → 빠카ー앙!
+    es = mti.parse(open(base + '.MTL', 'rb').read()); m = bytearray(open(base + '.MTI', 'rb').read())
+    for i, t in ((21, '카'), (22, '빠'), (24, '앙')):
+        i -= 20; idx, pal = mti.get(bytes(m), es[i]); put4(m, es[i], banner(idx, pal, t, ow=2))
+    out[f + '.MTI'] = bytes(m)
     build_prize(out)
     return out
 def quant(rgba, pal):
