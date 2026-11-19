@@ -1,0 +1,15 @@
+gametitle=Minna no Tennis (J)(SCPS-15113) 한글패치판
+
+[Widescreen 16:9]
+gsaspectratio=16:9
+author=ElHecht (NTSC-J by Arapapa), 한글패치판 CRC 대응
+description=16:9 와이드스크린 (PCSX2 패치 DB 기반)
+patch=1,EE,00139120,word,08070243
+patch=1,EE,00139124,word,00000000
+patch=1,EE,001c090c,word,3c013f40
+patch=1,EE,001c0910,word,4481f000
+patch=1,EE,001c0914,word,461e2103
+patch=1,EE,001c0918,word,e4840544
+patch=1,EE,001c091c,word,46002107
+patch=1,EE,001c0920,word,0804e449
+patch=1,EE,00137984,word,3c034456

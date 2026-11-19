@@ -1,0 +1,22 @@
+{
+ "version": "v1.0",
+ "date": "2026-11-19",
+ "game": "Minna no Tennis (Japan, Asia) / SCPS-15113 / PS2 (DVD ISO)",
+ "asset": "Minna_no_Tennis_PS2_KO_v1.0.xdelta",
+ "asset_size": 7875428,
+ "asset_sha256": "41d04b98666da7d59c1712dcfdd00f800e553b3f05deb3b86c9fe5079efea302",
+ "xdelta_options": "xdelta3 -e -0 -S none -A (no compression, no secondary compression, no application header)",
+ "widescreen_asset": "SCPS-15113_A35F1A95.pnach",
+ "widescreen_size": 526,
+ "widescreen_sha256": "90c4d61570043ebaa0020fdaa49c8073e0d178c1961ab22e7cd3e64634620e87",
+ "source_iso_size": 1309933568,
+ "source_iso_md5": "91a919939101438296b99a39d3770fe9",
+ "source_iso_sha1": "7393147b1312f2e5fd1d627ea437189537968dde",
+ "source_iso_sha256": "66d95b4fc7252ddcddee7c04eb8fc789937cd477b9bde020779cb146229d12af",
+ "source_elf_crc": "A35F68F7",
+ "output_iso_size": 1315104768,
+ "output_iso_md5": "57b96a9d298c34b87e5e10ffc48a7b8b",
+ "output_iso_sha1": "0a0b59fe08bff197b5d30229311986a938fd1f5d",
+ "output_iso_sha256": "a4da8a7a9675356c2fdd6f765a5262f7401fefa067c825b23f2c828a0a96258d",
+ "output_elf_crc": "A35F1A95"
+}
