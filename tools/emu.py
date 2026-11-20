@@ -18,7 +18,7 @@ def pnach():
     out = ['gametitle=Minna no Tennis (dev vpad)']
     out += ['patch=1,EE,%08x,word,%08x' % (CAVE + 4 * i, c) for i, c in enumerate(code)]
     out += ['patch=1,EE,%08x,word,%08x' % (HOOK, j(CAVE)), 'patch=1,EE,%08x,word,00000000' % (HOOK + 4)]
-    if os.environ.get('WIDE'): out += [l for l in open(os.path.join(R, 'SCPS-15113_A35F1A97.pnach'), encoding='utf8').read().splitlines() if l.startswith('patch=')]
+    if os.environ.get('WIDE'): out += [l for l in open(os.path.join(R, 'SCPS-15113_A35F246D.pnach'), encoding='utf8').read().splitlines() if l.startswith('patch=')]
     return '\n'.join(out) + '\n'
 def elf_crc(iso):
     sys.path.insert(0, os.path.dirname(__file__)); import iso as I

@@ -35,7 +35,7 @@ put('hsm_result', {(1, 0, 180, 32): ('트레이닝 모드', L), 1: ('종합 연�
 put('hsm_serve', {(0, 1, 215, 32): ('세컨드 서브 금지!', L), (0, 33, 215, 64): ('구종이 다릅니다!', L), (0, 64, 120, 95): ('저스트!', L)})
 put('hsm_timer', {4: '남은 시간'})
 put('hsm_kinsshi00', {(10, 2, 246, 62): '진입 금지'})
-SFX = {'cf00-cloth': '퍽', 'cf00-kusa': '사각', 'cf00-metal01': '깡', 'cf00-metal02': '철컥', 'cf00-metal03': '콰앙', 'cf00-netdown': '퍽',
+SFX = {'cf00-cloth': '퍽', 'cf00-kusa': '툭', 'cf00-metal01': '깡', 'cf00-metal02': '철컥', 'cf00-metal03': '콰앙', 'cf00-netdown': '퍽',
        'cf00-netpole': '팡', 'cf00-netup': '팍', 'cf00-suna': '퍼석', 'cf00-taki': '촤악', 'cf00-tamari': '찰박', 'cf00-tuchi': '쿵',
        'cf00-water': '촤악', 'cf00-wood': '통~', 'cf00-yuka': '퐁', 'e_bashi': '팍!', 'e_dash': '탓!', 'e_dosa': '털썩', 'e_poko': '콩', 'e_suka': '휙'}
 for f, t in SFX.items():

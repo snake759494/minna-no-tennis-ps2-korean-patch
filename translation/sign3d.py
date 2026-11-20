@@ -58,7 +58,8 @@ def banner(idx, pal, text, ow=4, glow=False):
     alpha = np.maximum(ol, g) * 255
     tgt = np.concatenate([rgb, alpha[..., None]], -1); P = pal.astype(float)
     dist = ((tgt[:, :, None, :] - P[None, None]) ** 2 * np.array([1, 1, 1, 3])).sum(-1)
-    return dist.argmin(-1).astype(np.uint8)
+    out = dist.argmin(-1).astype(np.uint8); out[alpha < 24] = int(np.argmin(pal[:, 3]))   # 바탕은 완전 투명
+    return out
 def put4(m, e, new):
     if e['psm'] == 0x14:
         f = new.reshape(-1); b = (f[0::2] & 15) | (f[1::2] << 4); m[e['pix']:e['pix'] + len(b)] = b.astype(np.uint8).tobytes()
@@ -87,6 +88,7 @@ def build(dir_=None):
     for i, t in ((21, '카'), (22, '빠'), (24, '앙')):
         i -= 20; idx, pal = mti.get(bytes(m), es[i]); put4(m, es[i], banner(idx, pal, t, ow=2))
     out[f + '.MTI'] = bytes(m)
+    build_court(out)
     build_prize(out)
     return out
 def quant(rgba, pal):
@@ -108,6 +110,43 @@ def tile(idx, pal, t):
     rgb = fill * g[..., None] + edge * (1 - g[..., None]); alpha = np.maximum(ol, g) * 255
     tgt = np.concatenate([rgb, alpha[..., None]], -1); P = pal.astype(float)
     return ((tgt[:, :, None, :] - P[None, None]) ** 2 * np.array([1, 1, 1, 3])).sum(-1).argmin(-1).astype(np.uint8)
+KS = 'data/court/course09/hole/kasen_h01_s1111'
+DK = dict(font='h', fill=(35, 28, 24), clear='inpaint')
+V = lambda t: chr(10).join(t)
+COURT = {16: [  # (영역, 원본→정방향 변환, 글자)
+    ((0, 0, 128, 64), 'r90m', [dict(DK, cbox=(33, 12, 55, 104), box=(34, 12, 54, 104), text=V('관계자외')),
+                                dict(DK, cbox=(9, 48, 31, 123), box=(10, 50, 30, 122), text=V('출입금지'))]),
+    ((0, 64, 64, 128), 'v', [dict(DK, cbox=(8, 6, 62, 46), box=(6, 8, 62, 44), text='쓰레기' + chr(10) + '버리지 마세요', size=11, clear='n', line=(255, 255, 255), ow=1)], True),
+    ((64, 64, 128, 128), 'v', [dict(DK, cbox=(18, 2, 50, 20), box=(18, 3, 48, 19), text='선로', size=10, clear='n'),
+                                dict(DK, cbox=(6, 20, 62, 60), box=(6, 22, 60, 58), text='위험', clear='n')], True)],
+    18: [((0, 0, 128, 128), 'v', [dict(cbox=(4, 6, 50, 24), box=(4, 7, 50, 23), text='물가', font='h', fill=(35, 28, 24), line=(255, 255, 255), ow=1.5, clear='inpaint'),
+                                   dict(cbox=(16, 22, 116, 62), box=(18, 24, 114, 60), text='위험!', font='h', fill=(200, 30, 30), line=(255, 255, 255), ow=2, clear='inpaint')])],
+    29: [((0, 0, 128, 128), 'v', [dict(cbox=(94, 2, 124, 80), box=(96, 4, 122, 78), text=V('개똥은'), font='h', fill=(235, 60, 20), line=(40, 20, 10), ow=1.5, clear='inpaint'),
+                                   dict(cbox=(66, 16, 98, 124), box=(68, 18, 96, 122), text=V('치워요!'), font='h', fill=(235, 60, 20), line=(40, 20, 10), ow=1.5, clear='inpaint')])]}
+def _tf(a, t, inv=False):
+    if t == 'v': return a[::-1]
+    return (np.rot90(a[:, ::-1], -1) if inv else np.rot90(a, 1)[:, ::-1])
+def build_court(out):
+    import imgtext
+    base = os.path.join(R, 'work', 'xb', KS)
+    es = mti.parse(open(base + '.MTL', 'rb').read()); m = bytearray(open(base + '.MTI', 'rb').read())
+    for i, regs in COURT.items():
+        idx, pal = mti.get(bytes(m), es[i]); rgba = pal[idx].copy()
+        for reg in regs:
+            (x0, y0, x1, y1), t, ents = reg[:3]
+            up = np.ascontiguousarray(_tf(rgba[y0:y1, x0:x1], t))
+            if len(reg) > 3:                            # 검은 글자만 주변색으로 메움 (별·바탕 유지)
+                dark = up[..., :3].max(-1) < 95; fill = up.copy()
+                for c in range(3):
+                    ch = up[..., c].astype(float); ch[dark] = np.nan
+                    for _ in range(6):
+                        g = nd.generic_filter(ch, np.nanmedian, size=3, mode='nearest'); ch = np.where(np.isnan(ch), g, ch)
+                    fill[..., c] = np.nan_to_num(ch).astype(np.uint8)
+                up = fill
+            new = imgtext.compose(up, ents)
+            rgba[y0:y1, x0:x1] = _tf(new, t, True)
+        q = quant(rgba, pal); q = np.where(np.any(rgba != pal[idx], -1), q, idx); put4(m, es[i], q.astype(np.uint8))
+    out[KS + '.MTI'] = bytes(m)
 PZ = 'data/azuma/inpane/mdl/prize/'
 def build_prize(out):
     from img_menu1 import DAN, RANKS
