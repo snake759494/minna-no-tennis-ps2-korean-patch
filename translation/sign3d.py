@@ -98,6 +98,16 @@ def edit2d(m, e, ents):
     import imgtext
     idx, pal = mti.get(bytes(m), e); new = imgtext.compose(pal[idx], ents)
     q = quant(new, pal); changed = np.any(new != pal[idx], -1); q = np.where(changed, q, idx); put4(m, e, q.astype(np.uint8))
+def tile(idx, pal, t):
+    a = pal[idx][..., 3]; mk = a > 128; bg = int(np.argmin(pal[:, 3]))
+    if not t: return np.full_like(idx, bg)
+    inn = nd.binary_erosion(mk, iterations=2)
+    fill = np.median(pal[idx[inn]][:, :3], 0); edge = np.median(pal[idx[mk & ~inn]][:, :3], 0)
+    H, W = idx.shape; g = render([t], (3, 3, W - 3, H - 3), W, H)
+    ol = np.clip(nd.maximum_filter(g, size=5), 0, 1)
+    rgb = fill * g[..., None] + edge * (1 - g[..., None]); alpha = np.maximum(ol, g) * 255
+    tgt = np.concatenate([rgb, alpha[..., None]], -1); P = pal.astype(float)
+    return ((tgt[:, :, None, :] - P[None, None]) ** 2 * np.array([1, 1, 1, 3])).sum(-1).argmin(-1).astype(np.uint8)
 PZ = 'data/azuma/inpane/mdl/prize/'
 def build_prize(out):
     from img_menu1 import DAN, RANKS
@@ -114,6 +124,13 @@ def build_prize(out):
         es = mti.parse(open(base + '.MTL', 'rb').read()); m = bytearray(open(base + '.MTI', 'rb').read())
         for i, gl in ((1, False), (2, True)):
             idx, pal = mti.get(bytes(m), es[i]); put4(m, es[i], banner(idx, pal, rk, ow=3, glow=gl))
+        out[f + '.MTI'] = bytes(m)
+    for k in range(7):                                  # ランクアップ! / ワールドランククリア! 글자 타일
+        f = PZ + 'r%02d' % k; m = bytearray(out[f + '.MTI'])
+        es = mti.parse(open(os.path.join(R, 'work', 'xb', f) + '.MTL', 'rb').read())
+        tl = ['월', '드', '랭', '크', '클', '리', '어', '!', '', '', ''] if k == 6 else ['랭', '크', '업', '!', '', '', '']
+        for i, t in enumerate(tl):
+            idx, pal = mti.get(bytes(m), es[i + 3]); put4(m, es[i + 3], tile(idx, pal, t))
         out[f + '.MTI'] = bytes(m)
     f = PZ + 'RankUp_kiroku'; base = os.path.join(R, 'work', 'xb', f)
     es = mti.parse(open(base + '.MTL', 'rb').read()); m = bytearray(open(base + '.MTI', 'rb').read())

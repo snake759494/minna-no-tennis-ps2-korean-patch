@@ -1,10 +1,10 @@
 # 모두의 테니스 PS2 한글패치
 
-PS2 일본판 **모두의 테니스(みんなのテニス, SCPS-15113)**용 비공식 한국어 패치입니다. **설명 띠·메뉴·확인창·메모리 카드 메시지** 등 게임 문자열과, **메뉴 제목·버튼·캐릭터 선택·경기 HUD·결과·스테이터스·트레이닝·챌린지 모드·로딩 팁·튜토리얼·메인 메뉴 3D 간판·타이틀 로고 자막** 등 그림 글자를 한국어로 바꿨습니다. PCSX2용 **16:9 와이드 패치**도 함께 배포합니다. 현재 배포판은 **v1.1 (2026-11-20)**입니다.
+PS2 일본판 **모두의 테니스(みんなのテニス, SCPS-15113)**용 비공식 한국어 패치입니다. **설명 띠·메뉴·확인창·메모리 카드 메시지** 등 게임 문자열과, **메뉴 제목·버튼·캐릭터 선택·경기 HUD·결과·스테이터스·트레이닝·챌린지 모드·로딩 팁·튜토리얼·메인 메뉴 3D 간판·타이틀 로고 자막** 등 그림 글자를 한국어로 바꿨습니다. PCSX2용 **16:9 와이드 패치**도 함께 배포합니다. 현재 배포판은 **v1.2 (2026-11-20)**입니다.
 
 [패치 다운로드](https://github.com/snake759494/minna-no-tennis-ps2-korean-patch/releases/latest) · [기술 설명](docs/TECHNICAL.md) · [재빌드](docs/BUILD.md) · [변경 기록](CHANGELOG.md) · [권리 안내](RIGHTS.md)
 
-릴리즈 첨부 파일은 한글패치 **Minna_no_Tennis_PS2_KO_v1.1.xdelta**와 와이드 패치 **SCPS-15113_A35F1A97.pnach**입니다. 저장소에는 제작 소스와 한국어 번역만 공개합니다. 원본·완성 디스크 이미지, 추출한 게임 파일, 일본어 원문, 글꼴 파일, 외부 실행 파일은 포함하지 않습니다. GitHub가 자동으로 만드는 Source code ZIP/TAR는 저장소 소스를 압축한 것이며 게임 파일이 아닙니다.
+릴리즈 첨부 파일은 한글패치 **Minna_no_Tennis_PS2_KO_v1.2.xdelta**와 와이드 패치 **SCPS-15113_A35F1A97.pnach**입니다. 저장소에는 제작 소스와 한국어 번역만 공개합니다. 원본·완성 디스크 이미지, 추출한 게임 파일, 일본어 원문, 글꼴 파일, 외부 실행 파일은 포함하지 않습니다. GitHub가 자동으로 만드는 Source code ZIP/TAR는 저장소 소스를 압축한 것이며 게임 파일이 아닙니다.
 
 ## 게임 소개 및 대상 버전
 
@@ -22,11 +22,11 @@ PS2 일본판 **모두의 테니스(みんなのテニス, SCPS-15113)**용 비�
 | **원본 ISO MD5** | `91a919939101438296b99a39d3770fe9` |
 | 원본 ISO SHA-1 | `7393147b1312f2e5fd1d627ea437189537968dde` |
 | 원본 ISO SHA-256 | `66d95b4fc7252ddcddee7c04eb8fc789937cd477b9bde020779cb146229d12af` |
-| xdelta 파일 크기 | 7,875,433 바이트 |
-| xdelta SHA-256 | `eaba7a0a3cb730d0911b35a315345b86385bf8487cc4e6093a2b43df8a5fe2bd` |
+| xdelta 파일 크기 | 7,868,765 바이트 |
+| xdelta SHA-256 | `75785df0edecd0fa8a4afc6f1b772eaee76f9e1925fe895f670440649c514db4` |
 | 적용 결과 ISO 크기 | 1,315,104,768 바이트 |
-| 적용 결과 ISO SHA-1 | `d74255f69e2eaa6fdac42edeb75c90da16a62255` |
-| 적용 결과 ISO SHA-256 | `feac8635b1d8f5788be7a9a3105bc9520fb0eb2b157be6016b57f66aa5473d29` |
+| 적용 결과 ISO SHA-1 | `93ce8af6861598d4b1bd8511727fbee478c44847` |
+| 적용 결과 ISO SHA-256 | `e01e316ee09526dd17217cf02c8620ec434a5db6e4cab81d120ff6155b19f833` |
 | 적용 결과 게임 CRC (PCSX2) | `A35F1A97` |
 
 원본 게임 파일은 사용자가 직접 준비해야 합니다.
@@ -41,7 +41,7 @@ Get-FileHash -Algorithm MD5 -LiteralPath '.\Minna no Tennis (Japan, Asia).iso'
 
 ### xdelta UI 사용
 
-1. 릴리즈에서 `Minna_no_Tennis_PS2_KO_v1.1.xdelta`를 받습니다.
+1. 릴리즈에서 `Minna_no_Tennis_PS2_KO_v1.2.xdelta`를 받습니다.
 2. xdelta3 패치를 지원하는 도구에서 **Apply Patch** 기능을 엽니다.
 3. **Patch**에는 xdelta 파일을, **Source File**에는 해시가 일치하는 원본 `.iso`를 선택합니다.
 4. **Output File**에는 새 파일 이름을 지정합니다(예: `Minna no Tennis (Korean).iso`).
@@ -51,7 +51,7 @@ xdelta는 호환성을 위해 압축·2차 압축·파일 경로 헤더 없이 �
 ### 명령줄 사용
 
 ```powershell
-.\xdelta3.exe -d -s '.\Minna no Tennis (Japan, Asia).iso' '.\Minna_no_Tennis_PS2_KO_v1.1.xdelta' '.\Minna no Tennis (Korean).iso'
+.\xdelta3.exe -d -s '.\Minna no Tennis (Japan, Asia).iso' '.\Minna_no_Tennis_PS2_KO_v1.2.xdelta' '.\Minna no Tennis (Korean).iso'
 ```
 
 원본판 세이브 스테이트는 쓰지 마세요. 메모리 카드 세이브는 원본판과 호환됩니다.

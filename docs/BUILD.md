@@ -18,7 +18,7 @@ $env:PYTHONIOENCODING = 'utf-8'; python tools/build.py                # → "Min
 
 ## 차분 파일
 ```powershell
-.\xdelta.exe -e -0 -S none -A -s "Minna no Tennis (Japan, Asia).iso" "Minna no Tennis (Japan, Asia) (Korean).iso" Minna_no_Tennis_PS2_KO_v1.1.xdelta
+.\xdelta.exe -e -0 -S none -A -s "Minna no Tennis (Japan, Asia).iso" "Minna no Tennis (Japan, Asia) (Korean).iso" Minna_no_Tennis_PS2_KO_v1.2.xdelta
 ```
 
 ## 파일
