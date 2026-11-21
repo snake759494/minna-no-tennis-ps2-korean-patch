@@ -4,7 +4,7 @@ PS2 일본판 **모두의 테니스(みんなのテニス, SCPS-15113)**용 비�
 
 [패치 다운로드](https://github.com/snake759494/minna-no-tennis-ps2-korean-patch/releases/latest) · [기술 설명](docs/TECHNICAL.md) · [재빌드](docs/BUILD.md) · [변경 기록](CHANGELOG.md) · [권리 안내](RIGHTS.md)
 
-릴리즈 첨부 파일은 한글패치 **Minna_no_Tennis_PS2_KO_v1.3.xdelta**와 와이드 패치 **SCPS-15113_A35F246D.pnach**입니다. 저장소에는 제작 소스와 한국어 번역만 공개합니다. 원본·완성 디스크 이미지, 추출한 게임 파일, 일본어 원문, 글꼴 파일, 외부 실행 파일은 포함하지 않습니다. GitHub가 자동으로 만드는 Source code ZIP/TAR는 저장소 소스를 압축한 것이며 게임 파일이 아닙니다.
+릴리즈 첨부 파일은 한글패치 **Minna_no_Tennis_PS2_KO_v1.4.xdelta**와 와이드 패치 **SCPS-15113_A35F2139.pnach**입니다. 저장소에는 제작 소스와 한국어 번역만 공개합니다. 원본·완성 디스크 이미지, 추출한 게임 파일, 일본어 원문, 글꼴 파일, 외부 실행 파일은 포함하지 않습니다. GitHub가 자동으로 만드는 Source code ZIP/TAR는 저장소 소스를 압축한 것이며 게임 파일이 아닙니다.
 
 ## 게임 소개 및 대상 버전
 
@@ -22,12 +22,12 @@ PS2 일본판 **모두의 테니스(みんなのテニス, SCPS-15113)**용 비�
 | **원본 ISO MD5** | `91a919939101438296b99a39d3770fe9` |
 | 원본 ISO SHA-1 | `7393147b1312f2e5fd1d627ea437189537968dde` |
 | 원본 ISO SHA-256 | `66d95b4fc7252ddcddee7c04eb8fc789937cd477b9bde020779cb146229d12af` |
-| xdelta 파일 크기 | 8,358,572 바이트 |
-| xdelta SHA-256 | `4d43facccfb709af24521c37dffb37ffa3b9a3d4c378778e29aafa337b2d2494` |
-| 적용 결과 ISO 크기 | 1,315,596,288 바이트 |
-| 적용 결과 ISO SHA-1 | `55c5f2d8a8ad37e296269fd683c4298c665bb677` |
-| 적용 결과 ISO SHA-256 | `fc696ab4bb83a2ef09d6cbf0b33b9c39bd807e7fb19251ef77184036ae135c42` |
-| 적용 결과 게임 CRC (PCSX2) | `A35F246D` |
+| xdelta 파일 크기 | 8,211,785 바이트 |
+| xdelta SHA-256 | `ab0f9d746638735699caa31137d686a05a31d604dae6291fb5b4111ffe6918eb` |
+| 적용 결과 ISO 크기 | 1,315,147,776 바이트 |
+| 적용 결과 ISO SHA-1 | `9c168a334028e709d5813640009970260b8d6366` |
+| 적용 결과 ISO SHA-256 | `d368e18bb172655359244b9a6ff562a76366d6e6bdea60c84afecaf49c15e740` |
+| 적용 결과 게임 CRC (PCSX2) | `A35F2139` |
 
 원본 게임 파일은 사용자가 직접 준비해야 합니다.
 
@@ -41,7 +41,7 @@ Get-FileHash -Algorithm MD5 -LiteralPath '.\Minna no Tennis (Japan, Asia).iso'
 
 ### xdelta UI 사용
 
-1. 릴리즈에서 `Minna_no_Tennis_PS2_KO_v1.3.xdelta`를 받습니다.
+1. 릴리즈에서 `Minna_no_Tennis_PS2_KO_v1.4.xdelta`를 받습니다.
 2. xdelta3 패치를 지원하는 도구에서 **Apply Patch** 기능을 엽니다.
 3. **Patch**에는 xdelta 파일을, **Source File**에는 해시가 일치하는 원본 `.iso`를 선택합니다.
 4. **Output File**에는 새 파일 이름을 지정합니다(예: `Minna no Tennis (Korean).iso`).
@@ -51,17 +51,17 @@ xdelta는 호환성을 위해 압축·2차 압축·파일 경로 헤더 없이 �
 ### 명령줄 사용
 
 ```powershell
-.\xdelta3.exe -d -s '.\Minna no Tennis (Japan, Asia).iso' '.\Minna_no_Tennis_PS2_KO_v1.3.xdelta' '.\Minna no Tennis (Korean).iso'
+.\xdelta3.exe -d -s '.\Minna no Tennis (Japan, Asia).iso' '.\Minna_no_Tennis_PS2_KO_v1.4.xdelta' '.\Minna no Tennis (Korean).iso'
 ```
 
 원본판 세이브 스테이트는 쓰지 마세요. 메모리 카드 세이브는 원본판과 호환됩니다.
 
 ## 16:9 와이드 패치 사용법 (PCSX2 2.x)
 
-게임 옵션에는 화면비 설정이 없습니다. `SCPS-15113_A35F246D.pnach`는 **한글패치를 적용한 ISO 전용**입니다. 한글패치가 실행파일(ELF)의 파일 위치 표를 고쳐 게임 CRC가 `A35F68F7`에서 `A35F246D`로 바뀌므로, PCSX2에 내장된 원본판 와이드 패치는 자동으로 적용되지 않습니다. 이 파일은 그 내장 패치(ElHecht 제작, NTSC-J 이식 Arapapa)를 한글판 CRC에 맞춰 옮긴 것입니다. 패치가 고치는 코드(0x139120, 0x137984)는 한글패치가 건드리지 않습니다.
+게임 옵션에는 화면비 설정이 없습니다. `SCPS-15113_A35F2139.pnach`는 **한글패치를 적용한 ISO 전용**입니다. 한글패치가 실행파일(ELF)의 파일 위치 표를 고쳐 게임 CRC가 `A35F68F7`에서 `A35F2139`로 바뀌므로, PCSX2에 내장된 원본판 와이드 패치는 자동으로 적용되지 않습니다. 이 파일은 그 내장 패치(ElHecht 제작, NTSC-J 이식 Arapapa)를 한글판 CRC에 맞춰 옮긴 것입니다. 패치가 고치는 코드(0x139120, 0x137984)는 한글패치가 건드리지 않습니다.
 
-1. PCSX2에서 한글판 ISO를 한 번 부팅하고 종료합니다. 로그(도구 > 로그 창 보기)나 게임 목록 속성에서 CRC가 `A35F246D`인지 확인합니다.
-2. `SCPS-15113_A35F246D.pnach`를 PCSX2 `patches` 폴더에 복사합니다. 파일 이름을 바꾸지 마세요.
+1. PCSX2에서 한글판 ISO를 한 번 부팅하고 종료합니다. 로그(도구 > 로그 창 보기)나 게임 목록 속성에서 CRC가 `A35F2139`인지 확인합니다.
+2. `SCPS-15113_A35F2139.pnach`를 PCSX2 `patches` 폴더에 복사합니다. 파일 이름을 바꾸지 마세요.
    - 설치판 기본 위치: `문서\PCSX2\patches`
    - 포터블판: PCSX2 폴더 안의 `patches`
    - 정확한 위치는 설정 > 폴더에서 "패치" 항목으로 확인할 수 있습니다.
@@ -72,7 +72,7 @@ xdelta는 호환성을 위해 압축·2차 압축·파일 경로 헤더 없이 �
 주의
 - 원본 일본판 ISO에는 이 파일이 필요 없습니다. PCSX2 내장 와이드 패치를 그대로 켜면 됩니다.
 - 경기 화면만 보정됩니다. 타이틀·메인 메뉴·캐릭터 선택·옵션 같은 2D 메뉴 화면은 가로로 늘어나 보입니다.
-- 패치가 목록에 없으면 파일 이름의 CRC(`A35F246D`)와 실제 게임 CRC가 같은지, `patches` 폴더 위치가 맞는지 확인하세요.
+- 패치가 목록에 없으면 파일 이름의 CRC(`A35F2139`)와 실제 게임 CRC가 같은지, `patches` 폴더 위치가 맞는지 확인하세요.
 - 와이드 패치를 끄려면 속성 > 패치에서 체크를 풀고 화면비를 4:3으로 되돌립니다.
 
 ## 한글화 범위

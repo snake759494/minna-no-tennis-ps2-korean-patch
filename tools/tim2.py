@@ -70,7 +70,16 @@ def write(d, pic, rgba, orig=None):
                 dif = px[:, None, :3] - pal[None, :, :3]
                 dc = (dif * dif).sum(-1) * (np.minimum(px[:, None, 3], pal[None, :, 3]) / 255.0)
                 da = (px[:, None, 3] - pal[None, :, 3]) ** 2 * 3.0
-                idx[yy, xx] = np.argmin(dc + da, 1)
+                cost = dc + da
+                if (pic['ctype'] & 0x1f) == 3:      # 불투명 픽셀은 원 팔레트의 대표 알파(raw)를 가진 색만 사용 (게임이 알파값으로 합성)
+                    ra = np.frombuffer(cl, np.uint8, n * 4).reshape(n, 4)[:, 3]
+                    if not (pic['ctype'] & 0x80): ra = ra[_clut_order(n)]
+                    op = ra >= 0x80
+                    if op.any():
+                        main = np.bincount(ra[op]).argmax()
+                        bad = (ra != main) & op
+                        cost = cost + np.where((px[:, None, 3] >= 250) & bad[None, :], 1e9, 0)
+                idx[yy, xx] = np.argmin(cost, 1)
         if it == 4:
             f = idx.reshape(-1); raw = (f[0::2] | (f[1::2] << 4)).astype(np.uint8)
         else: raw = idx.astype(np.uint8).reshape(-1)

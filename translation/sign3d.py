@@ -89,6 +89,8 @@ def build(dir_=None):
         i -= 20; idx, pal = mti.get(bytes(m), es[i]); put4(m, es[i], banner(idx, pal, t, ow=2))
     out[f + '.MTI'] = bytes(m)
     build_court(out)
+    build_sfx(out)
+    build_notice(out)
     build_prize(out)
     return out
 def quant(rgba, pal):
@@ -110,6 +112,37 @@ def tile(idx, pal, t):
     rgb = fill * g[..., None] + edge * (1 - g[..., None]); alpha = np.maximum(ol, g) * 255
     tgt = np.concatenate([rgb, alpha[..., None]], -1); P = pal.astype(float)
     return ((tgt[:, :, None, :] - P[None, None]) ** 2 * np.array([1, 1, 1, 3])).sum(-1).argmin(-1).astype(np.uint8)
+NOTICE = ['테니스 코트 이용자분께', '· 테니스화를 신어 주세요', '· 음식·흡연 금지', '· 유아 출입 주의', '· 사용 후 정리 부탁']
+def build_notice(out):
+    import imgtext
+    bg = (226, 226, 222); ents = [dict(cbox=(2, 1, 126, 63), clear='fill', color=bg, box=(0, 0, 1, 1), text='')]
+    ents = [dict(cbox=(2, 1, 126, 63), clear='inpaint', box=(0, 0, 1, 1), text='')]
+    for k, t in enumerate(NOTICE):
+        y = 1 + k * 12
+        ents.append(dict(box=(4, y, 124, y + 13), text=t, font='g9', align='c' if k == 0 else 'l', fill=(44, 44, 45), clear='n', ow=0, size=10))
+    for f in ('fence00', 'fence03'):
+        path = 'data/court/course04/structure/' + f; base = os.path.join(R, 'work', 'xb', path)
+        es = mti.parse(open(base + '.MTL', 'rb').read()); m = bytearray(open(base + '.MTI', 'rb').read())
+        idx, pal = mti.get(bytes(m), es[2]); rgba = pal[idx].copy()
+        r = rgba[2:63, 2:126, :3].reshape(-1, 3); bgc = np.median(r[r.mean(-1) >= np.percentile(r.mean(-1), 50)], 0).astype(np.uint8)
+        rgba[2:63, 2:126, :3] = bgc                          # 잔글씨 전부 지우고 바탕색으로
+        new = imgtext.compose(rgba, ents[1:])
+        q = quant(new, pal); q = np.where(np.any(new != pal[idx], -1), q, idx); put4(m, es[2], q.astype(np.uint8))
+        out[path + '.MTI'] = bytes(m)
+SFXC = {'e_bashi': ('팍!', (244, 156, 45)), 'e_dash': ('탓!', (233, 153, 55)), 'e_dosa': ('털썩', (224, 204, 80)),
+        'e_poko': ('콩', (245, 190, 53)), 'e_suka': ('휙', (173, 253, 251))}
+def build_sfx(out):
+    import tim2
+    for f, (t, col) in SFXC.items():
+        path = 'data/azuma/panel/' + f + '.tm2'; d = open(os.path.join(R, 'work', 'xb', path), 'rb').read(); pic = tim2.read(d)[0]
+        H, W = pic['h'], pic['w']; ss = 4
+        g = render([t], (6, 5, W - 6, H - 5), W, H)                       # 0~1 글자
+        dk = np.clip(nd.maximum_filter(g, size=3), 0, 1); wh = np.clip(nd.maximum_filter(g, size=7), 0, 1)
+        rgb = np.zeros((H, W, 3)); rgb[:] = 255
+        rgb = rgb * (1 - dk[..., None]) + np.array([55, 55, 55]) * dk[..., None]
+        rgb = rgb * (1 - g[..., None]) + np.array(col) * g[..., None]
+        rgba = np.concatenate([rgb, (wh * 255)[..., None]], -1); rgba[wh < 0.35] = 0; rgba[wh >= 0.35, 3] = 255
+        out[path] = tim2.write(d, pic, rgba.astype(np.uint8))
 KS = 'data/court/course09/hole/kasen_h01_s1111'
 DK = dict(font='h', fill=(35, 28, 24), clear='inpaint')
 V = lambda t: chr(10).join(t)

@@ -18,7 +18,7 @@ $env:PYTHONIOENCODING = 'utf-8'; python tools/build.py                # → "Min
 
 ## 차분 파일
 ```powershell
-.\xdelta.exe -e -0 -S none -A -s "Minna no Tennis (Japan, Asia).iso" "Minna no Tennis (Japan, Asia) (Korean).iso" Minna_no_Tennis_PS2_KO_v1.3.xdelta
+.\xdelta.exe -e -0 -S none -A -s "Minna no Tennis (Japan, Asia).iso" "Minna no Tennis (Japan, Asia) (Korean).iso" Minna_no_Tennis_PS2_KO_v1.4.xdelta
 ```
 
 ## 파일
@@ -27,4 +27,4 @@ $env:PYTHONIOENCODING = 'utf-8'; python tools/build.py                # → "Min
 - `translation/menu_bin.tsv`, `menu_bin2.tsv`: MENU.BIN 문자열 `오프셋	한국어`(원래 칸 안에서 제자리 교체)
 - `tools/build.py`: 전체 빌드, `build_img.py`·`imgtext.py`·`tim2.py` 그림 글자, `kfont.py`·`gffont.py` 게임 글꼴, `menubin.py` MENU.BIN, `xb.py` XB 아카이브, `mti.py` 3D 메뉴 텍스처, `iso.py`·`isopatch.py` 디스크
 - `tools/emu.py`, `boxes.py`, `contact.py`, `sheet.py`, `sjscan.py`, `menustr.py`, `tm2png.py`: 검증·조사용 스크립트(개인 환경용)
-- `SCPS-15113_A35F246D.pnach`: 16:9 와이드 패치
+- `SCPS-15113_A35F2139.pnach`: 16:9 와이드 패치

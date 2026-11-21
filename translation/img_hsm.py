@@ -39,5 +39,6 @@ SFX = {'cf00-cloth': '퍽', 'cf00-kusa': '툭', 'cf00-metal01': '깡', 'cf00-met
        'cf00-netpole': '팡', 'cf00-netup': '팍', 'cf00-suna': '퍼석', 'cf00-taki': '촤악', 'cf00-tamari': '찰박', 'cf00-tuchi': '쿵',
        'cf00-water': '촤악', 'cf00-wood': '통~', 'cf00-yuka': '퐁', 'e_bashi': '팍!', 'e_dash': '탓!', 'e_dosa': '털썩', 'e_poko': '콩', 'e_suka': '휙'}
 for f, t in SFX.items():
+    if f.startswith('e_'): continue          # 글자 그림 효과음은 sign3d.build_sfx
     SPEC[P + f + '.tm2'] = [dict(cbox=(9, 7, 55, 25), clear='inpaint', box=(6, 4, 58, 28), text=t, font='h', fill=(255, 255, 255), line=(40, 40, 40), ow=2)]
 SPEC[D + 'hsm_info.tm2'] = by_id(D + 'hsm_info.tm2', {12: '예', 13: '아니오', 15: '예', 16: '아니오'}, 4, 1, font='h')
